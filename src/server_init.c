@@ -52,6 +52,7 @@ static int				listen_init(int fd) {
 
 int server_init(t_server *server)
 {
+	server->shouldStop = false;
 	if ((server->fd = create_socket()) == -1)
 		return (1);
 	//TODO: vrai port
