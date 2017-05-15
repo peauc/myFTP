@@ -44,7 +44,7 @@ int						server_cleanup(t_server *server);
 // ##############################################################################
 // # SERVER_RESPONSES.c															#
 // ##############################################################################
-int send_accepted_response(t_client *client);
+int						send_accepted_response(t_client *client);
 
 // ##############################################################################
 // # SERVER_LOGIC.c																#
