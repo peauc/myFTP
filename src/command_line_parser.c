@@ -9,11 +9,11 @@
 #include "tools.h"
 #include "command_line_parser.h"
 
-int command_line_parser(char **av, char **path, unsigned short *port)
+int command_line_parser(int ac, char **av, char **path, unsigned short *port)
 {
-	if (!av[1] || !av[2])
+	if (ac != 3)
 	{
-		dprintf(2, "Usage: ./%s port path\n", av[0]);
+		dprintf(2, "Usage: %s port path\n", av[0]);
 		return (1);
 	}
 	if (!is_number(av[1]))
@@ -22,7 +22,7 @@ int command_line_parser(char **av, char **path, unsigned short *port)
 		return (1);
 	}
 	if (!directory_exists(av[2])) {
-		dprintf(2, "Cannot access path %s\n", av[2]);
+		dprintf(2, "Cannot access directory %s\n", av[2]);
 		return (1);
 	}
 	if (atoi(av[1]) > USHRT_MAX) {
