@@ -23,7 +23,11 @@ int	server_logic_loop(t_server *server, t_client *client)
 	get_user_and_pass(server, client);
 	while (client->shouldContinue)
 	{
-		get_next_command();
+		if (!get_next_command(client->fd))
+		{
+			return (0);
+		}
+
 	}
 	if (close(client->fd) == -1)
 	{

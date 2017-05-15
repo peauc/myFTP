@@ -35,6 +35,7 @@ int				server_core_loop(t_server *server)
 		fork_pid = fork();
 		if (fork_pid == 0)
 		{
+			printf("[ENTR] Entering the server_logic_loop\n");
 			if (server_logic_loop(server, &client))
 				return (1);
 			printf("[QUIT] Leaving the server_logic_loop\n");
