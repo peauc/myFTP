@@ -34,6 +34,6 @@ typedef struct			s_command
 // ##############################################################################
 // # GET_NEXT_COMMAND.c															#
 // ##############################################################################
-t_command get_next_command();
+t_command	*get_next_command(int fd);
 
 #endif //MYFTP_GET_NEXT_COMMAND_H
