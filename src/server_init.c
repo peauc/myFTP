@@ -22,13 +22,14 @@ static int				create_socket()
 		dprintf(2, "Can't start TCP socket (error:socket)\n");
 		return (-1);
 	}
-	return (0);
+	return (fd);
 }
 
 static int				bind_socket(int fd, unsigned short port) {
 	struct sockaddr_in	addr;
 	
 	addr.sin_port = htons(port);
+	printf("%d %d\n", addr.sin_port, port);
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_family = AF_INET;
 	if (bind(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) == -1) {
