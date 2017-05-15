@@ -2,6 +2,8 @@
 // Created by peau_c on 5/15/17.
 //
 
+#include <ctype.h>
+#include <sys/stat.h>
 #include "tools.h"
 
 bool	directory_exists(char *path)
@@ -9,7 +11,7 @@ bool	directory_exists(char *path)
 	struct stat s_buf;
 	
 	stat(path, &s_buf);
-	return (IS_DIR(s_buf.st_mode));
+	return (S_ISDIR(s_buf.st_mode));
 }
 
 bool	is_number(char *number)
@@ -23,6 +25,7 @@ bool	is_number(char *number)
 		{
 			return (false);
 		}
+	i++;
 	}
 	
 	return (true);
