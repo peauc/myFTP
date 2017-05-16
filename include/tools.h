@@ -7,6 +7,7 @@
 
 #include <stdbool.h>
 
+int		write_on_socket(int fd, const char * const message);
 bool	directory_exists(char *path);
 bool	is_number(char *number);
 
