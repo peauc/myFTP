@@ -12,6 +12,7 @@ int					main(int ac, char **av)
 		dprintf(2, "Error while parsing command line arguments\n");
 		return (1);
 	}
-	server(path, port);
+	if (server(path, port))
+		return (1);
 	return (0);
 }
