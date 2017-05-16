@@ -24,6 +24,7 @@ typedef struct			s_client
 	char 				*ip;
 	struct sockaddr_in	s_in_client;
 	bool				shouldContinue;
+	bool				is_loged;
 }						t_client;
 
 // ##############################################################################
@@ -45,6 +46,11 @@ int						server_cleanup(t_server *server);
 // # SERVER_RESPONSES.c															#
 // ##############################################################################
 int						send_accepted_response(t_client *client);
+int						send_wrong_user_pass_response(t_client *client);
+int						send_wrong_login_response(t_client *client);
+int						send_input_pass_response(t_client *client);
+int						send_wrong_login_order(t_client *client);
+
 
 // ##############################################################################
 // # SERVER_LOGIC.c																#

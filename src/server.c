@@ -28,6 +28,7 @@ int				server_core_loop(t_server *server)
 	t_client	client;
 	pid_t		fork_pid;
 	
+	client.shouldContinue = true;
 	while (!server->shouldStop)
 	{
 		if (accept_new_connection(server, &client))
@@ -39,6 +40,7 @@ int				server_core_loop(t_server *server)
 			if (server_logic_loop(server, &client))
 				return (1);
 			printf("[QUIT] Leaving the server_logic_loop\n");
+			return (0);
 		}
 	}
 	return (0);
