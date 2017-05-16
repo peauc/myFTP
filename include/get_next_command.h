@@ -5,6 +5,9 @@
 #ifndef MYFTP_GET_NEXT_COMMAND_H
 #define MYFTP_GET_NEXT_COMMAND_H
 
+#define FATAL_ERROR NULL
+#define SYNTAX_ERROR (t_command *)-1
+
 typedef enum			s_instructions
 {
 	NONE = -1,

@@ -77,14 +77,14 @@ static t_command	*_convert_string_to_command(char *str)
 	if (!_is_valid_syntax(str))
 	{
 	    dprintf(2, "%s-%d: Illegal instruction\n", __FUNCTION__, __LINE__);
-		return (NULL);
+		return (SYNTAX_ERROR);
 	}
 	if ((command = malloc(sizeof(t_command))) == NULL)
-			return (NULL);
+			return (FATAL_ERROR);
 	command->arguments = strdup(index(str, ' ') + 1);
 	*index(str, ' ') = 0;
 	command->instruction = _convert_to_instruction(str);
-	dprintf(2, "\nCommand : arg = |%s|, instr = |%d|\n", command->arguments, command->instruction);
+	dprintf(2, "|%s| |%d|\n", command->arguments, command->instruction);
 	return (command);
 }
 
@@ -99,20 +99,20 @@ static char *_reader(int fd)
 	newline = false;
 	len = 2;
 	if (!(tmp = malloc(1)))
-		return (NULL);
+		return (FATAL_ERROR);
 	tmp[0] = 0;
 	c[1] = 0;
 	while ((error = read(fd, c, 1)) != 0)
 	{
 		if (error == -1 || (tmp = realloc(tmp, len)) == NULL)
-			return (NULL);
+			return (FATAL_ERROR);
 		if (newline && c[0] == '\n')
 			return (tmp[strlen(tmp)] = 0, tmp);
 		newline = (c[0] == '\r' ? true : false);
 		strcat(tmp, c);
 		len++;
 	}
-	return ((error == 0 && tmp[0] == 0 ? NULL : tmp));
+	return ((error == 0 && tmp[0] == 0 ? FATAL_ERROR : tmp));
 }
 
 t_command			*get_next_command(int fd)
@@ -123,10 +123,13 @@ t_command			*get_next_command(int fd)
 	if ((tmp = _reader(fd)) == NULL)
 	{
 		//TODO:Error message
-		return (NULL);
+		return (FATAL_ERROR);
 	}
-	_convert_string_to_command(tmp);
-	dprintf(2, "tmp = |%s|\n", tmp);
-	//PLACE HOLDER SINCE IM TIRED AND NEED TO SLEEP, AND I TEST BEFORE PUSHING
-	return (tmp);
+	if ((ret = _convert_string_to_command(tmp)) == SYNTAX_ERROR || ret == FATAL_ERROR)
+	{
+		dprintf(2, "Could not convert string to a valid server command\n");
+		return (ret);
+	}
+	free(tmp);
+	return (ret);
 }
