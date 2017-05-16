@@ -26,7 +26,7 @@ int command_line_parser(int ac, char **av, char **path, unsigned short *port)
 		return (1);
 	}
 	if (atoi(av[1]) > USHRT_MAX) {
-		dprintf(2, "Port is too large, max value is 65535\n");
+		dprintf(2, "Port is too large, max value is %d\n", USHRT_MAX);
 		return (1);
 	}
 	*port = (unsigned short)atoi(av[1]);
