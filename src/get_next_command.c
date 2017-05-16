@@ -9,53 +9,84 @@
 #include "server.h"
 #include "get_next_command.h"
 
-/*
-static t_command	_convert_string_to_command(char *str)
+static const char *instruction_index[] =
 {
-	t_command		command;
+		"USER",
+		"PASS",
+		"CWD",
+		"CDUT",
+		"QUIT",
+		"DELE",
+		"PWD",
+		"PASV",
+		"PORT",
+		"HELP",
+		"NOOP",
+		"RETR",
+		"STOR",
+		"LIST",
+};
+
+static t_instructions	_convert_to_instruction(char *str)
+{
+	int	i;
 	
-	return (command);
+	i = 0;
+	while (instruction_index[i])
+	{
+		if (strcmp(str, instruction_index[i]) == 0)
+			return ((t_instructions)i);
+		i++;
+	}
+	return (NONE);
 }
 
-static bool dont_contain_a_line(char *buffer, char **holder)
+//May be fucked, have to test thoroughly
+static bool	_is_valid_syntax(char *str)
 {
-	int i;
+	size_t	i;
+	size_t	count;
 	
-	if (*buffer == NULL)
-		return (false);
 	i = 0;
-	while (buffer[i])
+	count = 0;
+	while (str[i])
 	{
-		if (buffer[i] == '\r' && buffer[i + 1] == '\n' && buffer[i + 2])
-		{
-			if (*holder != NULL)
-				free(*holder);
-			*holder = strdup(buffer + i + 2);
-			buffer[i + 2] = 0;
-		}
-		++i;
+		if (str[i] == ' ')
+			count++;
+		i++;
 	}
-	return (false);
+	if (count != 1)
+	{
+		dprintf(2, "There is more than one space in the answer from the client\n");
+		return (false);
+	}
+	i = strlen(str) - 1;
+	if (i == 0 || (str[i] != '\n' && str[i - 1] == '\r'))
+	{
+		dprintf(2, "Answer from the client does not end with CRLF\n");
+		return (false);
+	}
+	return (true);
 }
-static char			*_reader(int fd)
+
+
+static t_command	*_convert_string_to_command(char *str)
 {
-	static char		*holder = NULL;
-	char			*buffer;
+	t_command		*command;
 	
-	buffer = NULL;
-	while (dont_contain_a_line(buffer, &holder))
+	if (!_is_valid_syntax(str))
 	{
-		buffer = realloc(buffer, (buffer == NULL ? 0 : strlen(buffer)) + BUFFER_SIZE);
-		if (read(fd, buffer, BUFFER_SIZE) == -1)
-		{
-			dprintf(2, "Error while reading in %s l'%d situated in %s\n",
-					__FUNCTION__, __LINE__, __FILE__);
-			return (NULL);
-		}
+	    dprintf(2, "%s-%d: Illegal instruction\n", __FUNCTION__, __LINE__);
+		return (NULL);
 	}
-	return (buffer);
+	if ((command = malloc(sizeof(t_command))) == NULL)
+			return (NULL);
+	command->arguments = strdup(index(str, ' ') + 1);
+	*index(str, ' ') = 0;
+	command->instruction = _convert_to_instruction(str);
+	dprintf(2, "\nCommand : arg = |%s|, instr = |%d|\n", command->arguments, command->instruction);
+	return (command);
 }
-*/
 
 static char *_reader(int fd)
 {
@@ -94,7 +125,8 @@ t_command			*get_next_command(int fd)
 		//TODO:Error message
 		return (NULL);
 	}
-	dprintf(2, "%s\n", tmp);
+	_convert_string_to_command(tmp);
+	dprintf(2, "tmp = |%s|\n", tmp);
 	//PLACE HOLDER SINCE IM TIRED AND NEED TO SLEEP, AND I TEST BEFORE PUSHING
 	return (tmp);
 }
