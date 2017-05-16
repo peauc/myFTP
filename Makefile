@@ -7,6 +7,7 @@ SRC_FILE=	main.c\
 		server_cleanup.c\
 		server_responses.c\
 		tools.c\
+		get_user_and_password.c\
 
 SRC=		$(addprefix src/, $(SRC_FILE))
 
