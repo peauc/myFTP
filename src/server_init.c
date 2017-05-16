@@ -29,7 +29,6 @@ static int				bind_socket(int fd, unsigned short port) {
 	struct sockaddr_in	addr;
 	
 	addr.sin_port = htons(port);
-	printf("%d %d\n", addr.sin_port, port);
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_family = AF_INET;
 	if (bind(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) == -1) {
@@ -56,7 +55,6 @@ int server_init(t_server *server)
 	server->shouldStop = false;
 	if ((server->fd = create_socket()) == -1)
 		return (1);
-	//TODO: vrai port
 	if (bind_socket(server->fd, server->port))
 		return (1);
 	if (listen_init(server->fd))
