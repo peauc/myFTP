@@ -7,12 +7,13 @@
 #include "server.h"
 #include "get_next_command.h"
 #include "get_user_and_password.h"
+#include "tools.h"
 
 static t_command *get_user(t_client *client)
 {
 	t_command	*user;
 	
-	dprintf(2, "GetUser\n");
+	dprintf_call(2, "GetUser\n");
 	if ((user = get_next_command(client->fd)) == FATAL_ERROR
 		|| user == SYNTAX_ERROR)
 		return ((int) user);
@@ -34,7 +35,7 @@ static t_command *get_pass(t_client *client)
 {
 	t_command	*pass;
 	
-	dprintf(2, "GetPass\n");
+	dprintf_call(2, "GetPass\n");
 	if ((pass = get_next_command(client->fd)) == FATAL_ERROR
 		|| pass == SYNTAX_ERROR)
 		return ((int) pass);
@@ -58,7 +59,7 @@ int get_user_and_pass(t_client *client)
 	t_command *user;
 	t_command *pass;
 	
-	dprintf(2, "getUserAndPass\n");
+	dprintf_call(2, "getUserAndPass\n");
 	user = get_user(client);
 	pass = get_pass(client);
 	handle_login(client, user, pass);

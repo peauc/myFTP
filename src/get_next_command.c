@@ -8,6 +8,7 @@
 #include <unistd.h>
 #include "server.h"
 #include "get_next_command.h"
+#include "tools.h"
 
 static const char *instruction_index[] =
 {
@@ -57,13 +58,13 @@ static bool	_is_valid_syntax(char *str)
 	}
 	if (count != 1)
 	{
-		dprintf(2, "There is more than one space in the answer from the client\n");
+		dprintf_call(2, "There is more than one space in the answer from the client\n");
 		return (false);
 	}
 	i = strlen(str) - 1;
 	if (i == 0 || (str[i] != '\n' && str[i - 1] == '\r'))
 	{
-		dprintf(2, "Answer from the client does not end with CRLF\n");
+		dprintf_call(2, "Answer from the client does not end with CRLF\n");
 		return (false);
 	}
 	return (true);
@@ -76,7 +77,7 @@ static t_command	*_convert_string_to_command(char *str)
 	
 	if (!_is_valid_syntax(str))
 	{
-	    dprintf(2, "%s-%d: Illegal instruction\n", __FUNCTION__, __LINE__);
+	    dprintf_call(2, "%s-%d: Illegal instruction\n", __FUNCTION__, __LINE__);
 		return (SYNTAX_ERROR);
 	}
 	if ((command = malloc(sizeof(t_command))) == NULL)
@@ -84,7 +85,7 @@ static t_command	*_convert_string_to_command(char *str)
 	command->arguments = strdup(index(str, ' ') + 1);
 	*index(str, ' ') = 0;
 	command->instruction = _convert_to_instruction(str);
-	dprintf(2, "|%s| |%d|\n", command->arguments, command->instruction);
+	dprintf_call(2, "|%s| |%d|\n", command->arguments, command->instruction);
 	return (command);
 }
 
@@ -127,7 +128,7 @@ t_command			*get_next_command(int fd)
 	}
 	if ((ret = _convert_string_to_command(tmp)) == SYNTAX_ERROR || ret == FATAL_ERROR)
 	{
-		dprintf(2, "Could not convert string to a valid server command\n");
+		dprintf_call(2, "Could not convert string to a valid server command\n");
 		return (ret);
 	}
 	free(tmp);

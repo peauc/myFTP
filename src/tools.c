@@ -7,12 +7,28 @@
 #include <stdio.h>
 #include <ctype.h>
 #include <sys/stat.h>
+#include <stdarg.h>
 #include "tools.h"
+
+int dprintf_call(int fd, char *str, ...)
+{
+	va_list	list;
+	int		ret;
+
+#ifdef DEBUG
+	va_start(list, NULL);
+	va_end(list);
+	
+	ret = vdprintf(fd, str, list);
+	return (ret);
+#endif
+	return (0);
+}
 
 int write_on_socket(int fd, const char * const message)
 {
 	if (write(fd, message, strlen(message)) == -1) {
-		dprintf(2, "Cannot write on socket, aborting\n");
+		dprintf_call(2, "Cannot write on socket, aborting\n");
 		return (1);
 	}
 	return (0);

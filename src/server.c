@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <arpa/inet.h>
 #include "server.h"
+#include "tools.h"
 
 int		accept_new_connection(t_server *server, t_client *client)
 {
@@ -15,7 +16,7 @@ int		accept_new_connection(t_server *server, t_client *client)
 	client->fd = accept(server->fd, (struct sockaddr *) &client->s_in_client, &s_in_size);
 	if (client->fd == -1)
 	{
-		dprintf(2, "Could not accept upcoming transmition\n");
+		dprintf_call(2, "Could not accept upcoming transmition\n");
 		return (1);
 	}
 	if (send_accepted_response(client))
@@ -37,7 +38,7 @@ int				server_core_loop(t_server *server)
 		if (fork_pid == 0)
 		{
 			printf("[ENTR] Entering the server_logic_loop\n");
-			if (server_logic_loop(server, &client))
+			if (server_logic_loop(&client))
 				return (1);
 			printf("[QUIT] Leaving the server_logic_loop\n");
 			return (0);

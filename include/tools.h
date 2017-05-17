@@ -10,5 +10,7 @@
 int		write_on_socket(int fd, const char * const message);
 bool	directory_exists(char *path);
 bool	is_number(char *number);
+int		dprintf_call(int fd, char *str, ...);
+
 
 #endif //MYFTP_TOOLS_H

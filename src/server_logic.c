@@ -10,6 +10,7 @@
 #include <get_next_command.h>
 #include "get_user_and_password.h"
 #include "server.h"
+#include "tools.h"
 
 int	server_logic_loop(t_client *client)
 {
@@ -21,19 +22,19 @@ int	server_logic_loop(t_client *client)
 	{
 		if ((ret = get_next_command(client->fd)) == FATAL_ERROR)
 		{
-			dprintf(2, "%s-%d FatalError\n", __FUNCTION__, __LINE__);
+			dprintf_call(2, "%s-%d FatalError\n", __FUNCTION__, __LINE__);
 			return (0);
 		}
 		else if (ret == SYNTAX_ERROR)
 		{
-			dprintf(2, "%s-%d SyntaxError\n", __FUNCTION__, __LINE__);
+			dprintf_call(2, "%s-%d SyntaxError\n", __FUNCTION__, __LINE__);
 			continue ;
 		}
-		dprintf(2, "Normal execution\n");
+		dprintf_call(2, "Normal execution\n");
 	}
 	if (close(client->fd) == -1)
 	{
-		dprintf(2, "Could not close client's fd\n");
+		dprintf_call(2, "Could not close client's fd\n");
 		return (1);
 	}
 	return (0);

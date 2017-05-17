@@ -22,7 +22,7 @@ NAME=		myftp
 ifeq ($(DEBUG), no)
 CFLAGS=		-W -Wall -Wextra
 else
-CFLAGS=		-W -Wall -Wextra -g -O0 -ggdb
+CFLAGS=		-W -Wall -Wextra -g -O0 -ggdb -DDEBUG
 endif
 
 all:		$(NAME)

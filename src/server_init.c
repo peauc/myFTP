@@ -6,6 +6,7 @@
 #include <stdio.h>
 #include <netdb.h>
 #include "server.h"
+#include "tools.h"
 
 static int				create_socket()
 {
@@ -14,12 +15,12 @@ static int				create_socket()
 	
 	pe = getprotobyname("TCP");
 	if (!pe) {
-		dprintf(2, "Can't start TCP socket (error:getProtoByName)\n");
+		dprintf_call(2, "Can't start TCP socket (error:getProtoByName)\n");
 		return (-1);
 	}
 	fd = socket(AF_INET, SOCK_STREAM, pe->p_proto);
 	if (fd == -1) {
-		dprintf(2, "Can't start TCP socket (error:socket)\n");
+		dprintf_call(2, "Can't start TCP socket (error:socket)\n");
 		return (-1);
 	}
 	return (fd);
@@ -32,7 +33,7 @@ static int				bind_socket(int fd, unsigned short port) {
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_family = AF_INET;
 	if (bind(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) == -1) {
-		dprintf(2, "Can't start TCP socket (error:bind)\n");
+		dprintf_call(2, "Can't start TCP socket (error:bind)\n");
 		return (1);
 	}
 	return (0);
@@ -40,9 +41,9 @@ static int				bind_socket(int fd, unsigned short port) {
 
 static int				listen_init(int fd) {
 	if (listen(fd, QUEUE_SIZE) == -1) {
-		dprintf(2, "Can't start TCP socket (error:listen)\n");
+		dprintf_call(2, "Can't start TCP socket (error:listen)\n");
 		if (close(fd) == -1) {
-			dprintf(2, "Close failed on socket\n");
+			dprintf_call(2, "Close failed on socket\n");
 			return (1);
 		}
 		return (1);
