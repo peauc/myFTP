@@ -48,7 +48,7 @@ static t_command *get_pass(t_client *client)
 
 static void handle_login(t_client *client, t_command *user, t_command *pass)
 {
-	if (strcmp(user->arguments, "anonymous") == 0 && strcmp(pass->arguments, "") == 0)
+	if (strcmp(user->arguments, "Anonymous") == 0 && strcmp(pass->arguments, "") == 0)
 		client->is_loged = true;
 	else
 		send_wrong_login_response(client);
