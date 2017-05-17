@@ -11,13 +11,12 @@
 #include "get_user_and_password.h"
 #include "server.h"
 
-int	server_logic_loop(t_server *server, t_client *client)
+int	server_logic_loop(t_client *client)
 {
 	t_command *ret;
 	
-	(void) server;
 	client->ip = inet_ntoa(client->s_in_client.sin_addr);
-	get_user_and_pass(server, client);
+	get_user_and_pass(client);
 	while (client->shouldContinue)
 	{
 		if ((ret = get_next_command(client->fd)) == FATAL_ERROR)

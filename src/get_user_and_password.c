@@ -53,7 +53,7 @@ static void handle_login(t_client *client, t_command *user, t_command *pass)
 	else
 		send_wrong_login_response(client);
 }
-int get_user_and_pass(t_server *server, t_client *client)
+int get_user_and_pass(t_client *client)
 {
 	t_command *user;
 	t_command *pass;

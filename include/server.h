@@ -55,7 +55,7 @@ int						send_wrong_login_order(t_client *client);
 // ##############################################################################
 // # SERVER_LOGIC.c																#
 // ##############################################################################
-int						server_logic_loop(t_server *server, t_client *client);
+int						server_logic_loop(t_client *client);
 
 
 #endif //MYFTP_SERVER_H
