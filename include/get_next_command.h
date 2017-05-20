@@ -30,8 +30,8 @@ typedef enum			s_instructions
 
 typedef struct			s_command
 {
-	t_instructions		instruction;
 	char				*arguments;
+	t_instructions		instruction;
 }						t_command;
 
 // ##############################################################################

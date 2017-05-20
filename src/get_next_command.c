@@ -56,7 +56,7 @@ static bool	_is_valid_syntax(char *str)
 			count++;
 		i++;
 	}
-	if (count != 1)
+	if (count > 1)
 	{
 		dprintf_call(2, "There is more than one space in the answer from the client\n");
 		return (false);
@@ -74,6 +74,7 @@ static bool	_is_valid_syntax(char *str)
 static t_command	*_convert_string_to_command(char *str)
 {
 	t_command		*command;
+	char			*string;
 	
 	if (!_is_valid_syntax(str))
 	{
@@ -82,10 +83,16 @@ static t_command	*_convert_string_to_command(char *str)
 	}
 	if ((command = malloc(sizeof(t_command))) == NULL)
 			return (FATAL_ERROR);
-	command->arguments = strdup(index(str, ' ') + 1);
-	*index(str, ' ') = 0;
+	string = index(str, ' ') + 1;
+	dprintf_call(2, "%p\n", string);
+	if (string == (char *)1 || string[0] == 0)
+		command->arguments = "";
+	else
+	{
+		command->arguments = strdup(string);
+		*index(str, ' ') = 0;
+	}
 	command->instruction = _convert_to_instruction(str);
-	dprintf_call(2, "|%s| |%d|\n", command->arguments, command->instruction);
 	return (command);
 }
 
@@ -126,6 +133,8 @@ t_command			*get_next_command(int fd)
 		//TODO:Error message
 		return (FATAL_ERROR);
 	}
+	if (strlen(tmp) > 0 && tmp[strlen(tmp) - 1] == '\r')
+		tmp[strlen(tmp) - 1] = 0;
 	if ((ret = _convert_string_to_command(tmp)) == SYNTAX_ERROR || ret == FATAL_ERROR)
 	{
 		dprintf_call(2, "Could not convert string to a valid server command\n");

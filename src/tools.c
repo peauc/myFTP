@@ -17,9 +17,9 @@ int dprintf_call(int fd, char *str, ...)
 
 #ifdef DEBUG
 	va_start(list, NULL);
-	va_end(list);
 	
 	ret = vdprintf(fd, str, list);
+	va_end(list);
 	return (ret);
 #endif
 	return (0);

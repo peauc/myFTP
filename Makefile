@@ -6,8 +6,25 @@ SRC_FILE=	main.c\
 		server_logic.c\
 		server_cleanup.c\
 		server_responses.c\
+		server_responses_commands.c\
+		server_responses_login.c\
 		tools.c\
 		get_user_and_password.c\
+		command_cdup.c\
+		command_cwd.c\
+		command_dele.c\
+		command_handler.c\
+		command_help.c\
+		command_list.c\
+		command_noop.c\
+		command_pass.c\
+		command_pasv.c\
+		command_port.c\
+		command_pwd.c\
+		command_quit.c\
+		command_retr.c\
+		command_stor.c\
+		command_user.c\
 
 SRC=		$(addprefix src/, $(SRC_FILE))
 

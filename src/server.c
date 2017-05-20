@@ -29,6 +29,8 @@ int				server_core_loop(t_server *server)
 	t_client	client;
 	pid_t		fork_pid;
 	
+	client.is_loged = false;
+	client.server = server;
 	client.shouldContinue = true;
 	while (!server->shouldStop)
 	{
@@ -37,6 +39,7 @@ int				server_core_loop(t_server *server)
 		fork_pid = fork();
 		if (fork_pid == 0)
 		{
+			client.ip = inet_ntoa(client.s_in_client.sin_addr);
 			printf("[ENTR] Entering the server_logic_loop\n");
 			if (server_logic_loop(&client))
 				return (1);
