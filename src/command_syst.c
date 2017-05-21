@@ -8,9 +8,11 @@
 ** Last update Sun May 21 18:53:16 2017
 */
 
+#include "tools.h"
 #include "command_handler.h"
 
-int		command_noop(__attribute__((unused))char *argument, t_client *client)
+int command_syst(__attribute__((unused)) char *arg, t_client *client)
 {
-	return (send_ok_response(client));
+	return (write_on_socket(client->fd, "215 UNIX Type: L8\r\n"));
 }
+

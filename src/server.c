@@ -1,11 +1,18 @@
-//
-// Created by peau_c on 5/12/17.
-//
+/*
+** main.c for  in /home/peau_c/School/tek2/PSU_2016_myftp/src
+**
+** Made by
+** Login   <peau_c@epitech.net>
+**
+** Started on  Sun May 21 18:53:13 2017
+** Last update Sun May 21 18:53:16 2017
+*/
 
 #include <unistd.h>
 #include <stdio.h>
 #include <arpa/inet.h>
 #include "server.h"
+#include "client_init.h"
 #include "tools.h"
 
 int		accept_new_connection(t_server *server, t_client *client)
@@ -29,9 +36,7 @@ int				server_core_loop(t_server *server)
 	t_client	client;
 	pid_t		fork_pid;
 	
-	client.is_loged = false;
-	client.server = server;
-	client.shouldContinue = true;
+	client_init(&client, server);
 	while (!server->shouldStop)
 	{
 		if (accept_new_connection(server, &client))
@@ -53,7 +58,6 @@ int server(char *path, unsigned short port)
 {
 	t_server server;
 	
-	server.shouldStop = false;
 	server.path = path;
 	server.port = port;
 	if (server_init(&server))

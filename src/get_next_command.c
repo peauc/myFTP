@@ -1,6 +1,12 @@
-//
-// Created by peau_c on 5/12/17.
-//
+/*
+** main.c for  in /home/peau_c/School/tek2/PSU_2016_myftp/src
+**
+** Made by
+** Login   <peau_c@epitech.net>
+**
+** Started on  Sun May 21 18:53:13 2017
+** Last update Sun May 21 18:53:16 2017
+*/
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -26,6 +32,7 @@ static const char *instruction_index[] =
 		"RETR",
 		"STOR",
 		"LIST",
+		"SYST",
 };
 
 static t_instructions	_convert_to_instruction(char *str)
@@ -35,6 +42,7 @@ static t_instructions	_convert_to_instruction(char *str)
 	i = 0;
 	while (instruction_index[i])
 	{
+		dprintf_call(2, "loop |%s| |%s|\n", str, instruction_index[i]);
 		if (strcmp(str, instruction_index[i]) == 0)
 			return ((t_instructions)i);
 		i++;
@@ -86,13 +94,18 @@ static t_command	*_convert_string_to_command(char *str)
 	string = index(str, ' ') + 1;
 	dprintf_call(2, "%p\n", string);
 	if (string == (char *)1 || string[0] == 0)
+	{
+	    if (string != (char *)1)
+			*(string - 1) = 0;
 		command->arguments = "";
+	}
 	else
 	{
 		command->arguments = strdup(string);
 		*index(str, ' ') = 0;
 	}
 	command->instruction = _convert_to_instruction(str);
+	dprintf_call(2, "Converted a command %s to %d %s\n", str, command->instruction, command->arguments);
 	return (command);
 }
 
@@ -135,6 +148,7 @@ t_command			*get_next_command(int fd)
 	}
 	if (strlen(tmp) > 0 && tmp[strlen(tmp) - 1] == '\r')
 		tmp[strlen(tmp) - 1] = 0;
+	dprintf_call(2, "Data received = |%s|\n", tmp);
 	if ((ret = _convert_string_to_command(tmp)) == SYNTAX_ERROR || ret == FATAL_ERROR)
 	{
 		dprintf_call(2, "Could not convert string to a valid server command\n");

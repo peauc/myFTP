@@ -8,9 +8,10 @@
 ** Last update Sun May 21 18:53:16 2017
 */
 
-#include "command_handler.h"
+#include "server.h"
 
-int		command_noop(__attribute__((unused))char *argument, t_client *client)
+int	send_wrong_format_port(__attribute__((unused)) t_client *client)
 {
-	return (send_ok_response(client));
+	return (0);
 }
+

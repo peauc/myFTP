@@ -8,9 +8,11 @@
 ** Last update Sun May 21 18:53:16 2017
 */
 
-#include "command_handler.h"
+#include "tools.h"
+#include "server.h"
 
-int		command_noop(__attribute__((unused))char *argument, t_client *client)
+int command_unknown(__attribute__((unused)) char *argument, t_client *client)
 {
-	return (send_ok_response(client));
+	return (write_on_socket(client->fd, "550 Unkown verb.\r\n"));
 }
+

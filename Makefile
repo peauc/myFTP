@@ -1,12 +1,17 @@
 SRC_FILE=	main.c\
 		command_line_parser.c\
 		get_next_command.c\
+		client_init.c\
 		server.c\
 		server_init.c\
 		server_logic.c\
 		server_cleanup.c\
 		server_responses.c\
 		server_responses_commands.c\
+		server_responses_command_pasv.c\
+		server_responses_command_retr.c\
+		server_responses_command_delete.c\
+		server_responses_command_cwd.c\
 		server_responses_login.c\
 		tools.c\
 		get_user_and_password.c\
@@ -25,6 +30,8 @@ SRC_FILE=	main.c\
 		command_retr.c\
 		command_stor.c\
 		command_user.c\
+		command_syst.c\
+		command_unknown.c\
 
 SRC=		$(addprefix src/, $(SRC_FILE))
 

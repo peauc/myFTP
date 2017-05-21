@@ -1,6 +1,12 @@
-//
-// Created by peau_c on 5/15/17.
-//
+/*
+** main.c for  in /home/peau_c/School/tek2/PSU_2016_myftp/src
+**
+** Made by
+** Login   <peau_c@epitech.net>
+**
+** Started on  Sun May 21 18:53:13 2017
+** Last update Sun May 21 18:53:16 2017
+*/
 
 #include <string.h>
 #include <unistd.h>
@@ -10,20 +16,24 @@
 #include <stdarg.h>
 #include "tools.h"
 
+#ifdef DEBUG
 int dprintf_call(int fd, char *str, ...)
 {
 	va_list	list;
 	int		ret;
 
-#ifdef DEBUG
 	va_start(list, NULL);
 	
 	ret = vdprintf(fd, str, list);
 	va_end(list);
 	return (ret);
-#endif
+}
+#else
+int dprintf_call(__attribute__((unused))int fd, __attribute__((unused))char *str, ...)
+{
 	return (0);
 }
+#endif
 
 int write_on_socket(int fd, const char * const message)
 {

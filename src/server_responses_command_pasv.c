@@ -9,13 +9,10 @@
 */
 
 
-#ifndef MYFTP_GET_USER_AND_PASSWORD_H
-#define MYFTP_GET_USER_AND_PASSWORD_H
-
 #include <server.h>
+#include <stdio.h>
 
-#define MAXIMUM_TRY_PER_SESSION 10
-
-int get_user_and_pass(t_client *client);
-
-#endif //MYFTP_GET_USER_AND_PASSWORD_H
+int		send_good_pasv_command_response(t_client *client, char *ip)
+{
+	return (dprintf(client->fd, "227 Entering Passive Mode (%s,%d,%d)\r\n", ip, client->data_port / 256, client->data_port % 256));
+}
