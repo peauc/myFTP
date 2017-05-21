@@ -41,7 +41,7 @@ OBJ=		$(SRC:.c=.o)
 
 INC=		-I./include/
 
-NAME=		myftp
+NAME=		server
 
 ifeq ($(DEBUG), no)
 CFLAGS=		-W -Wall -Wextra
