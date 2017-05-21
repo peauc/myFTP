@@ -8,9 +8,6 @@
 ** Last update Sun May 21 18:53:16 2017
 */
 
-#include <unistd.h>
-#include <string.h>
-#include <stdio.h>
 #include "server.h"
 #include "tools.h"
 

@@ -8,11 +8,10 @@
 ** Last update Sun May 21 18:53:16 2017
 */
 
-#include <memory.h>
 #include <tools.h>
 #include "command_handler.h"
 
-int		command_port(char *argument, t_client *client)
+int		command_port(__attribute__((unused)) char *argument, t_client *client)
 {
 	write_on_socket(client->fd, "550 Access denied\r\n");
 	return (0);

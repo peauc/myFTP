@@ -8,14 +8,9 @@
 ** Last update Sun May 21 18:53:16 2017
 */
 
-#include <string.h>
 #include <unistd.h>
-#include <stdio.h>
-#include <netdb.h>
-#include <arpa/inet.h>
 #include <get_next_command.h>
 #include "get_user_and_password.h"
-#include "server.h"
 #include "tools.h"
 #include "command_handler.h"
 

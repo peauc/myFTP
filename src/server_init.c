@@ -10,7 +10,6 @@
 
 #include <stdlib.h>
 #include <unistd.h>
-#include <stdio.h>
 #include <netdb.h>
 #include <memory.h>
 #include <arpa/inet.h>
