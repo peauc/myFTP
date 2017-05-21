@@ -39,19 +39,21 @@ static int	create_socket()
 static int	bind_socket(int fd, unsigned short port)
 {
 	struct sockaddr_in addr;
+	int enable;
 	
+	enable = 1;
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_family = AF_INET;
-	if ((setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
-					(const char *) &addr, sizeof(addr))) == -1)
-	{
-		dprintf_call(2, "Can't start TCP socket (error:sockopt)\n");
-		return (1);
-	}
+	
 	if (bind(fd, (struct sockaddr *) &addr, sizeof(struct sockaddr_in)) == -1)
 	{
 		dprintf_call(2, "Can't start TCP socket (error:bind)\n");
+		return (1);
+	}
+	if ((setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, &enable, sizeof(int))) == -1)
+	{
+		dprintf_call(2, "Can't start TCP socket (error:sockopt)\n");
 		return (1);
 	}
 	return (0);
