@@ -13,5 +13,6 @@
 
 int	send_file_missing_retr(t_client *client)
 {
-	return (write_on_socket(client->fd, "550 RETR: Specify a file to retrieve.\r\n"));
+	return (write_on_socket(client->fd,
+							"550 RETR: Specify a file to retrieve.\r\n"));
 }

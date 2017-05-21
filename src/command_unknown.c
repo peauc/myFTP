@@ -11,7 +11,7 @@
 #include "tools.h"
 #include "server.h"
 
-int command_unknown(__attribute__((unused)) char *argument, t_client *client)
+int	command_unknown(__attribute__((unused)) char *argument, t_client *client)
 {
 	return (write_on_socket(client->fd, "550 Unkown verb.\r\n"));
 }

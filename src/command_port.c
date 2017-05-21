@@ -15,12 +15,5 @@
 int		command_port(char *argument, t_client *client)
 {
 	write_on_socket(client->fd, "550 Access denied\r\n");
-	return(0);
-	client->mode = ACTIVE;
-	
-	if (strstr(argument, " ") == NULL)
-	{
-	
-	}
-	
+	return (0);
 }

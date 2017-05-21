@@ -14,5 +14,9 @@
 
 int		send_good_pasv_command_response(t_client *client, char *ip)
 {
-	return (dprintf(client->fd, "227 Entering Passive Mode (%s,%d,%d)\r\n", ip, client->data_port / 256, client->data_port % 256));
+	return (dprintf(client->fd,
+					"227 Entering Passive Mode (%s,%d,%d)\r\n",
+					ip,
+					client->data_port / 256,
+					client->data_port % 256));
 }

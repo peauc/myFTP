@@ -14,7 +14,6 @@
 #include "server.h"
 #include "tools.h"
 
-
 int	send_ok_response(t_client *client)
 {
 	return (write_on_socket(client->fd, "200 OK.\r\n"));
@@ -23,5 +22,6 @@ int	send_ok_response(t_client *client)
 
 int	send_accepted_response(t_client *client)
 {
-	return (write_on_socket(client->fd, "220 Welcome to peauc's awesome server\r\n"));
+	return (write_on_socket(client->fd,
+							"220 Welcome to peauc's awesome server\r\n"));
 }

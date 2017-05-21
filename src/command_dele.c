@@ -25,7 +25,8 @@ static bool	_check_exploit(char *argument, char *path)
 	{
 		if (access(argument, W_OK) == -1)
 		{
-		    dprintf_call(2, "Access did not permit deletion on argument %s\n", argument);
+		    dprintf_call(2, "Access did not permit deletion on argument %s\n",
+						 argument);
 			return (true);
 		}
 		return (false);
@@ -41,7 +42,8 @@ static bool	_check_exploit(char *argument, char *path)
 
 int		command_dele(char *argument, t_client *client)
 {
-	if (strcmp(argument, "") == 0 || _check_exploit(argument, client->server->path))
+	if (strcmp(argument, "") == 0
+		|| _check_exploit(argument, client->server->path))
 	{
 		send_wrong_dele_argument(client);
 		return (1);

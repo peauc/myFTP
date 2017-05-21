@@ -20,7 +20,8 @@ int		accept_new_connection(t_server *server, t_client *client)
 	socklen_t	s_in_size;
 	
 	s_in_size = sizeof(client->s_in_client);
-	client->fd = accept(server->fd, (struct sockaddr *) &client->s_in_client, &s_in_size);
+	client->fd = accept(server->fd,
+						(struct sockaddr *) &client->s_in_client, &s_in_size);
 	if (client->fd == -1)
 	{
 		dprintf_call(2, "Could not accept upcoming transmition\n");
@@ -54,7 +55,8 @@ int				server_core_loop(t_server *server)
 	}
 	return (0);
 }
-int server(char *path, unsigned short port)
+
+int	server(char *path, unsigned short port)
 {
 	t_server server;
 	

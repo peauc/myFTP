@@ -17,7 +17,7 @@
 #include "tools.h"
 
 #ifdef DEBUG
-int dprintf_call(int fd, char *str, ...)
+int	dprintf_call(int fd, char *str, ...)
 {
 	va_list	list;
 	int		ret;
@@ -29,13 +29,14 @@ int dprintf_call(int fd, char *str, ...)
 	return (ret);
 }
 #else
-int dprintf_call(__attribute__((unused))int fd, __attribute__((unused))char *str, ...)
+int		dprintf_call(__attribute__((unused))int fd,
+						__attribute__((unused))char *str, ...)
 {
 	return (0);
 }
 #endif
 
-int write_on_socket(int fd, const char * const message)
+int		write_on_socket(int fd, const char * const message)
 {
 	if (write(fd, message, strlen(message)) == -1) {
 		dprintf_call(2, "Cannot write on socket, aborting\n");
@@ -46,7 +47,7 @@ int write_on_socket(int fd, const char * const message)
 
 bool	directory_exists(char *path)
 {
-	struct stat s_buf;
+	struct stat	s_buf;
 	
 	stat(path, &s_buf);
 	return (S_ISDIR(s_buf.st_mode));
@@ -54,7 +55,7 @@ bool	directory_exists(char *path)
 
 bool	is_number(char *number)
 {
-	int i;
+	int	i;
 	
 	i = 0;
 	while (number[i])

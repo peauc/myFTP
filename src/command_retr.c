@@ -16,39 +16,8 @@
 #include "tools.h"
 #include "command_handler.h"
 
-int		command_retr(char *argument, t_client *client)
+int		command_retr(__attribute__((unused)) char *argument, t_client *client)
 {
-	char	buffer[4096];
-	int		fd;
-	int		connect_fd;
-	ssize_t	ret;
-	
-	if (strcmp(argument, "") == 0)
-	{
-		send_file_missing_retr(client);
-		return (1);
-	}
-	if (client->mode == NOT_SET)
-	{
-		send_mode_not_set_response(client);
-		return (1);
-	}
-	if ((fd = open(argument, O_RDONLY)) == -1)
-	{
-		dprintf_call(2, "Could not open file %s\n", argument);
-		return (1);
-	}
-	connect_fd = accept_connection_from_client(client);
-	write_on_socket(client->fd, "150 Opening binary mode\n");
-	while ((ret = read(fd, buffer, 4095)) > 0)
-	{
-		if (write_on_socket(connect_fd, buffer) == -1)
-		{
-			dprintf_call(2, "Data write failed\r\n");
-			return (1);
-		}
-	}
-	close(connect_fd);
-	
+	write_on_socket(client->fd, "550 Access denied\r\n");
 	return (0);
 }

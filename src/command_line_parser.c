@@ -15,7 +15,7 @@
 #include "tools.h"
 #include "command_line_parser.h"
 
-int command_line_parser(int ac, char **av, char **path, unsigned short *port)
+int	command_line_parser(int ac, char **av, char **path, unsigned short *port)
 {
 	if (ac != 3)
 	{

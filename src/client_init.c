@@ -42,7 +42,8 @@ int		accept_connection_from_client(t_client *client)
 	int		new_socket;
 	
 	tmp_size = sizeof(sockaddr);
-	new_socket = accept(client->data_fd, (struct sockaddr*)&sockaddr, (socklen_t*)(&tmp_size));
+	new_socket = accept(client->data_fd,
+						(struct sockaddr*)&sockaddr, (socklen_t*)(&tmp_size));
 	if (new_socket < 0)
 	{
 		dprintf_call(2, "Cannot accept from the client\n");

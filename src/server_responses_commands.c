@@ -15,7 +15,9 @@
 
 int			send_mode_not_set_response(t_client *client)
 {
-	return (write_on_socket(client->fd, "520 Please set the data transfert mode with either PORT or PASV.\r\n"));
+	static const char * const message = "520 Please set the data transfert "
+			"mode with either PORT or PASV.\r\n";
+	return (write_on_socket(client->fd, message));
 }
 
 int			send_good_pwd_response(t_client *client, char *path)

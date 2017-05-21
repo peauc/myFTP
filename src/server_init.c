@@ -17,7 +17,7 @@
 #include "server.h"
 #include "tools.h"
 
-static int create_socket()
+static int	create_socket()
 {
 	struct protoent *pe;
 	int fd;
@@ -37,14 +37,15 @@ static int create_socket()
 	return (fd);
 }
 
-static int bind_socket(int fd, unsigned short port)
+static int	bind_socket(int fd, unsigned short port)
 {
 	struct sockaddr_in addr;
 	
 	addr.sin_port = htons(port);
 	addr.sin_addr.s_addr = INADDR_ANY;
 	addr.sin_family = AF_INET;
-	if ((setsockopt(fd, SOL_SOCKET, SO_REUSEADDR, (const char *) &addr, sizeof(addr))) == -1)
+	if ((setsockopt(fd, SOL_SOCKET, SO_REUSEADDR,
+					(const char *) &addr, sizeof(addr))) == -1)
 	{
 		dprintf_call(2, "Can't start TCP socket (error:sockopt)\n");
 		return (1);
@@ -57,7 +58,7 @@ static int bind_socket(int fd, unsigned short port)
 	return (0);
 }
 
-static int listen_init(int fd)
+static int	listen_init(int fd)
 {
 	if (listen(fd, QUEUE_SIZE) == -1)
 	{
@@ -72,7 +73,7 @@ static int listen_init(int fd)
 	return (0);
 }
 
-static void init_server_struct(t_server *server)
+static void	init_server_struct(t_server *server)
 {
 	char ac[256];
 	struct hostent *phe;
@@ -85,7 +86,7 @@ static void init_server_struct(t_server *server)
 	strcpy(server->ip, inet_ntoa(locaddr));
 	dprintf_call(2, "DEBUG: ServerLocalIp is :%s\n", server->ip);
 }
-int server_init(t_server *server)
+int	server_init(t_server *server)
 {
 	init_server_struct(server);
 	if ((server->fd = create_socket()) == -1)

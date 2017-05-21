@@ -15,7 +15,7 @@
 #include "get_user_and_password.h"
 #include "tools.h"
 
-static t_command *get_user(t_client *client)
+static t_command	*get_user(t_client *client)
 {
 	t_command	*user;
 	
@@ -36,7 +36,7 @@ static t_command *get_user(t_client *client)
 	return (user);
 }
 
-static t_command *get_pass(t_client *client)
+static t_command	*get_pass(t_client *client)
 {
 	t_command	*pass;
 	
@@ -56,10 +56,11 @@ static t_command *get_pass(t_client *client)
 	return (pass);
 }
 
-static void handle_login(t_client *client, t_command *user, t_command *pass)
+static void	handle_login(t_client *client, t_command *user, t_command *pass)
 {
 	dprintf_call(2, "|%s|\n|%s|\n", user->arguments, pass->arguments);
-	if (strcmp(user->arguments, "Anonymous") == 0 && strcmp(pass->arguments, "") == 0)
+	if (strcmp(user->arguments, "Anonymous") == 0
+		&& strcmp(pass->arguments, "") == 0)
 	{
 		dprintf_call(2, "Client is Logged\n");
 		client->is_loged = true;
@@ -69,7 +70,7 @@ static void handle_login(t_client *client, t_command *user, t_command *pass)
 		send_wrong_login_response(client);
 }
 
-int get_user_and_pass(t_client *client)
+int	get_user_and_pass(t_client *client)
 {
 	int count;
 	t_command *user;
@@ -81,7 +82,6 @@ int get_user_and_pass(t_client *client)
 	{
 		if (count == MAXIMUM_TRY_PER_SESSION)
 		    return (1);
-			//TODO:CHECK SERVER CLIENT ACCESS
 		if ((user = get_user(client)) != SYNTAX_ERROR && user != FATAL_ERROR)
 			if ((pass = get_pass(client)) != SYNTAX_ERROR && pass != FATAL_ERROR)
 				handle_login(client, user, pass);

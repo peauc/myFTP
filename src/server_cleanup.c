@@ -13,7 +13,7 @@
 #include "server.h"
 #include "tools.h"
 
-int server_cleanup(t_server *server)
+int	server_cleanup(t_server *server)
 {
 	if (close(server->fd) == -1)
 	{

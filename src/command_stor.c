@@ -10,7 +10,8 @@
 
 #include "command_handler.h"
 
-int		command_stor(__attribute__((unused))char *argument, __attribute__((unused))t_client *client)
+int		command_stor(__attribute__((unused))char *argument,
+						__attribute__((unused))t_client *client)
 {
 	return (0);
 }
